@@ -1,3 +1,4 @@
+import QueryClientProvider from "@/services/QueryClientProvider";
 import { ReactNode } from "react";
 
 export const metadata = {
@@ -8,7 +9,9 @@ export const metadata = {
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <QueryClientProvider>{children}</QueryClientProvider>
+      </body>
     </html>
   );
 };
