@@ -1,4 +1,7 @@
 const color = {
+  // web
+  bgColor: "#09082B",
+  // default
   black: "#000000",
   white: "#FFFFFF",
   // gray
