@@ -1,6 +1,8 @@
 const color = {
   // web
-  bgColor: "#09082B",
+  primaryColor: "#C6D6F7",
+  secondaryColor: "#212225",
+  bgColor: "#0f0f10",
   // default
   black: "#000000",
   white: "#FFFFFF",

@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import color from "./color";
 
 const GlobalStyle = createGlobalStyle` 
   ${reset} 
@@ -10,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
   }
   * {
     box-sizing: border-box;
+    color: ${color.white};
   }
   input, textarea { 
     -moz-user-select: auto;

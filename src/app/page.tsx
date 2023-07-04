@@ -3,7 +3,7 @@
 import Layout from "@/layouts/Layout";
 
 const MainPage = () => {
-  return <Layout>메인입니당</Layout>;
+  return <Layout>안녕</Layout>;
 };
 
 export default MainPage;
