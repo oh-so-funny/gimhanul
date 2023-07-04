@@ -15,6 +15,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
 export default Layout;
 
 const StyledLayout = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100vw;
   height: 100vh;
   background-color: ${color.primaryBgColor};

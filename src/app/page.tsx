@@ -48,7 +48,7 @@ const StyledMainPage = styled.div`
   gap: 70px;
   width: 100%;
   height: 100%;
-  padding: 50px 150px;
+  padding: 0px 250px;
 `;
 
 const Banner = styled.div`
