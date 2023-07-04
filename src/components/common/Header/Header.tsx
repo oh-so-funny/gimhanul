@@ -17,14 +17,14 @@ const StyledHeader = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 100px;
+  padding: 0px 150px;
   width: 100%;
   height: 63px;
-  background-color: ${color.secondaryColor};
-  border-bottom: 0.5px solid ${color.gray50};
+  background-color: ${color.secondaryBgColor};
+  border-bottom: 1px solid ${color.subColor};
 `;
 
 const Logo = styled.span`
   ${font.H4}
-  color: ${color.primaryColor};
+  color: ${color.white};
 `;
