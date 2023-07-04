@@ -1,10 +1,19 @@
 "use client";
 
-import ShortcutsIcon from "@/components/common/Icons/Shortcuts";
+import JobMenuItem from "@/components/main/JobMenuItem";
 import Layout from "@/layouts/Layout";
 import color from "@/styles/color";
 import font from "@/styles/font";
+import Image from "next/image";
+import BannerImage from "@/assets/banner-img.svg";
 import styled from "styled-components";
+
+const JOB_LIST_DATA = [
+  "프론트엔드 개발자",
+  "백엔드 개발자",
+  "프로덕트 디자이너",
+  "데브옵스 엔지니어",
+];
 
 const MainPage = () => {
   return (
@@ -16,34 +25,14 @@ const MainPage = () => {
             <br />
             <Highlight>쉽게</Highlight> 준비하자
           </IntroText>
+          <Image src={BannerImage} width={200} height={200} alt="banner-img" />
         </Banner>
         <JobMenuBox>
           <JobMenuLabel>직군</JobMenuLabel>
           <JobMenuList>
-            <JobMenuItem>
-              <JobText>프론트엔드 Developer</JobText>
-              <InterviewLink>
-                면접 바로가기 <ShortcutsIcon />
-              </InterviewLink>
-            </JobMenuItem>
-            <JobMenuItem>
-              <JobText>백엔드 Developer</JobText>
-              <InterviewLink>
-                면접 바로가기 <ShortcutsIcon />
-              </InterviewLink>
-            </JobMenuItem>
-            <JobMenuItem>
-              <JobText>프로덕트 Designer</JobText>
-              <InterviewLink>
-                면접 바로가기 <ShortcutsIcon />
-              </InterviewLink>
-            </JobMenuItem>
-            <JobMenuItem>
-              <JobText>Devops Engineer</JobText>
-              <InterviewLink>
-                면접 바로가기 <ShortcutsIcon />
-              </InterviewLink>
-            </JobMenuItem>
+            {JOB_LIST_DATA.map((item) => (
+              <JobMenuItem job={item} />
+            ))}
           </JobMenuList>
         </JobMenuBox>
       </StyledMainPage>
@@ -56,7 +45,7 @@ export default MainPage;
 const StyledMainPage = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 70px;
   width: 100%;
   height: 100%;
   padding: 50px 150px;
@@ -65,11 +54,10 @@ const StyledMainPage = styled.div`
 const Banner = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  height: 200px;
-  border: 2px solid ${color.subColor};
-  border-radius: 8px;
-  padding: 0px 50px;
+  height: 250px;
+  border-bottom: 1px solid ${color.subColor};
 `;
 
 const IntroText = styled.p`
@@ -99,33 +87,4 @@ const JobMenuList = styled.ul`
   gap: 32px;
   height: 215px;
   width: 100%;
-`;
-
-const JobMenuItem = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: calc(100% / 4);
-  height: 100%;
-  border-radius: 16px;
-  padding: 16px;
-  border: 2px solid ${color.subColor};
-  cursor: pointer;
-  &:hover {
-    background-color: ${color.primaryColor};
-  }
-`;
-
-const JobText = styled.p`
-  ${font.H3}
-`;
-
-const InterviewLink = styled.a`
-  ${font.H4}
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  align-self: flex-end;
-  margin-top: auto;
 `;
