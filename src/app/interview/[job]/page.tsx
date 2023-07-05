@@ -17,6 +17,7 @@ import QUESTION_DATA from "@/fixtures";
 import { useSpeechRecognition } from "react-speech-kit";
 import { customAxios } from "@/api";
 import Loading from "@/components/common/Loading/Loading";
+import Row from "@/components/common/Flex/Row";
 
 const InterviewPage = () => {
   const router = useRouter();
@@ -126,9 +127,21 @@ const InterviewPage = () => {
               끝내기
             </Button>
             {review.length === 0 ? (
-              <Button width={100} onClick={submitToGpt}>
-                제출
-              </Button>
+              <Row alignItems="center" gap="8px">
+                <Button width={100} onClick={submitToGpt}>
+                  제출
+                </Button>
+                <Button
+                  width={100}
+                  onClick={() => {
+                    router.push(`/interview/${category}`);
+                    setReview("");
+                    setQuestion("");
+                  }}
+                >
+                  다음
+                </Button>
+              </Row>
             ) : (
               <Button
                 width={100}
@@ -221,6 +234,7 @@ const ReviewBox = styled.div`
   border: 1px solid ${color.secondaryBgColor};
   padding: 16px;
   background-color: ${color.subColor};
+  font-weight: 500;
 `;
 
 const ReviewText = styled.p`

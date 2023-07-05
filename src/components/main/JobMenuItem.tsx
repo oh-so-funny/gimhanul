@@ -26,7 +26,7 @@ const StyledJobMenuItem = styled.li`
   width: calc(100% / 4);
   height: 100%;
   border-radius: 16px;
-  padding: 12px;
+  padding: 16px;
   border: 2px solid ${color.subColor};
   cursor: pointer;
   &:hover {
