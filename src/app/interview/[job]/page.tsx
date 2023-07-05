@@ -7,16 +7,24 @@ import QuestionIcon from "@/components/common/Icons/Question";
 import font from "@/styles/font";
 import MikeIcon from "@/components/common/Icons/Mike";
 import Button from "@/components/common/Button/Button";
-import ChatGptIcon from "@/components/common/Icons/ChatGpt";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import ChatGptImage from "@/assets/chat-gpt.png";
 import Image from "next/image";
+import ChatGptImage from "@/assets/chat-gpt.png";
+// @ts-ignore
+import { useSpeechRecognition } from "react-speech-kit";
 
 const InterviewPage = () => {
   const router = useRouter();
-  const [onMike, setOnMike] = useState(false);
+  const [userLiveAnswer, setUserLiveAnswer] = useState("");
   const [review, setReview] = useState("");
+
+  // speech
+  const { listen, listening, stop } = useSpeechRecognition({
+    onResult: (result: string) => {
+      setUserLiveAnswer(result);
+    },
+  });
 
   return (
     <Layout header={false}>
@@ -28,18 +36,17 @@ const InterviewPage = () => {
           </QuestionText>
         </QuestionBox>
         <LiveAnswerTextBox>
-          <Highlight>질문자의 답변:</Highlight> 어쩌구저쩌구라고 저는 생각합니다
-          그래서 어쩌구 저쩌구 어쩌구저쩌구라고 저는 생각합니다 그래서 어쩌구
-          저쩌어쩌구저쩌구라고 저는 생각합니다 그래서 어쩌구
-          저쩌어쩌구저쩌구라고 저는 생각합니다 그래서 어쩌구 저쩌
+          {listening ? (
+            <p>답변중입니다...</p>
+          ) : (
+            <p>
+              <Highlight>질문자의 답변:</Highlight> {userLiveAnswer}
+            </p>
+          )}
         </LiveAnswerTextBox>
-
         {review.length === 0 ? (
           <MikeButtobBox>
-            <MikeButton
-              isClicked={onMike}
-              onClick={() => setOnMike((prev) => !prev)}
-            >
+            <MikeButton onMouseDown={listen} onMouseUp={stop}>
               <MikeIcon />
             </MikeButton>
             <MikeButtonDesc>마이크를 키고 말씀해주셔야합니다</MikeButtonDesc>
@@ -151,12 +158,11 @@ const MikeButtobBox = styled.div`
   gap: 16px;
 `;
 
-const MikeButton = styled.button<{ isClicked: boolean }>`
+const MikeButton = styled.button`
   border-radius: 50%;
   width: 70px;
   height: 70px;
   border: 2px solid ${color.primaryColor};
-  background-color: ${(props) => props.isClicked && color.primaryColor};
   &:hover {
     background-color: ${color.primaryColor};
   }
