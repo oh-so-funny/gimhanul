@@ -33,7 +33,7 @@ const InterviewPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // debounce
-  const debouncedUserReply = useDebounce(reply, 1000);
+  const { debouncedValue, setDebouncedValue } = useDebounce(reply, 1000);
 
   // speech
   const { listen, listening, stop } = useSpeechRecognition({
@@ -92,7 +92,7 @@ const InterviewPage = () => {
               <p>답변중입니다...</p>
             ) : (
               <p>
-                <Highlight>질문자의 답변:</Highlight> {debouncedUserReply}
+                <Highlight>질문자의 답변:</Highlight> {debouncedValue}
               </p>
             )}
           </LiveAnswerTextBox>
@@ -134,9 +134,10 @@ const InterviewPage = () => {
                 <Button
                   width={100}
                   onClick={() => {
-                    router.push(`/interview/${category}`);
                     setReview("");
                     setQuestion("");
+                    setDebouncedValue("");
+                    router.push(`/interview/${category}`);
                   }}
                 >
                   다음
@@ -146,9 +147,10 @@ const InterviewPage = () => {
               <Button
                 width={100}
                 onClick={() => {
-                  router.push(`/interview/${category}`);
                   setReview("");
                   setQuestion("");
+                  setDebouncedValue("");
+                  router.push(`/interview/${category}`);
                 }}
               >
                 다음
