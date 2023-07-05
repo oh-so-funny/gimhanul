@@ -4,12 +4,10 @@ import font from "@/styles/font";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
-const JobMenuItem = ({ job }: { job: string }) => {
+const JobMenuItem = ({ job, path }: { job: string; path: string }) => {
   const router = useRouter();
   return (
-    <StyledJobMenuItem
-      onClick={() => router.push(`/interview/${job.replace(" ", "")}`)}
-    >
+    <StyledJobMenuItem onClick={() => router.push(`/interview/${path}`)}>
       <JobText>{job}</JobText>
       <InterviewLink>
         면접 바로가기 <ShortcutsIcon />

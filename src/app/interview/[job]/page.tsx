@@ -7,19 +7,27 @@ import QuestionIcon from "@/components/common/Icons/Question";
 import font from "@/styles/font";
 import MikeIcon from "@/components/common/Icons/Mike";
 import Button from "@/components/common/Button/Button";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import ChatGptImage from "@/assets/chat-gpt.png";
 import useDebounce from "@/hooks/useDebounce";
+import QUESTION_DATA from "@/fixtures";
 // @ts-ignore
 import { useSpeechRecognition } from "react-speech-kit";
 
 const InterviewPage = () => {
   const router = useRouter();
+
+  // path
+  const pathName = usePathname();
+  const category = pathName.replace("/interview/", "");
+
+  // useState
   const [userLiveAnswer, setUserLiveAnswer] = useState("");
   const [review, setReview] = useState("");
 
+  // debounce
   const debouncedUserLiveAnswer = useDebounce(userLiveAnswer, 1000);
 
   // speech
@@ -29,14 +37,35 @@ const InterviewPage = () => {
     },
   });
 
+  // get data
+  const getQuestionData = () => {
+    let data;
+    const randomNumber = Math.floor(Math.random() * 20);
+
+    switch (category) {
+      case "FRONT_END":
+        data = QUESTION_DATA.FRONT_END[randomNumber];
+        break;
+      case "BACK_END":
+        data = QUESTION_DATA.BACK_END[randomNumber];
+        break;
+      case "PRODUCT_DESIGNER":
+        data = QUESTION_DATA.PRODUCT_DESIGNER[randomNumber];
+        break;
+      case "DEVOPS":
+        data = QUESTION_DATA.DEVOPS[randomNumber];
+        break;
+    }
+
+    return data;
+  };
+
   return (
     <Layout header={false}>
       <StyledInterviewPage>
         <QuestionBox>
           <QuestionIcon />
-          <QuestionText>
-            동등연산자과 일치연산자의 차이에 대해서 설명하시오.
-          </QuestionText>
+          <QuestionText>{getQuestionData()}</QuestionText>
         </QuestionBox>
         <LiveAnswerTextBox>
           {listening ? (

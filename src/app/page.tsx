@@ -9,10 +9,22 @@ import BannerImage from "@/assets/banner-img.svg";
 import styled from "styled-components";
 
 const JOB_LIST_DATA = [
-  "프론트엔드 개발자",
-  "백엔드 개발자",
-  "프로덕트 디자이너",
-  "데브옵스 엔지니어",
+  {
+    job: "프론트엔드 개발자",
+    path: "FRONT_END",
+  },
+  {
+    job: "백엔드 개발자",
+    path: "BACK_END",
+  },
+  {
+    job: "프로덕트 디자이너",
+    path: "PRODUCT_DESIGNER",
+  },
+  {
+    job: "데브옵스 엔지니어",
+    path: "DEVOPS",
+  },
 ];
 
 const MainPage = () => {
@@ -30,8 +42,12 @@ const MainPage = () => {
         <JobMenuBox>
           <JobMenuLabel>직군</JobMenuLabel>
           <JobMenuList>
-            {JOB_LIST_DATA.map((item) => (
-              <JobMenuItem job={item} />
+            {JOB_LIST_DATA.map((item, index) => (
+              <JobMenuItem
+                key={`JobMenuItem ${index}`}
+                job={item.job}
+                path={item.path}
+              />
             ))}
           </JobMenuList>
         </JobMenuBox>
