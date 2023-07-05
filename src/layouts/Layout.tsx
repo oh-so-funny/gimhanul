@@ -3,10 +3,16 @@ import color from "@/styles/color";
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = ({
+  children,
+  header,
+}: {
+  children: ReactNode;
+  header: boolean;
+}) => {
   return (
     <>
-      <Header />
+      {header && <Header />}
       <StyledLayout>{children}</StyledLayout>
     </>
   );
@@ -19,6 +25,6 @@ const StyledLayout = styled.section`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background-color: ${color.primaryBgColor};
 `;

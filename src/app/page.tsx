@@ -17,7 +17,7 @@ const JOB_LIST_DATA = [
 
 const MainPage = () => {
   return (
-    <Layout>
+    <Layout header={true}>
       <StyledMainPage>
         <Banner>
           <IntroText>

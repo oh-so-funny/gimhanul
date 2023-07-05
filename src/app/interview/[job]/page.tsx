@@ -7,10 +7,19 @@ import QuestionIcon from "@/components/common/Icons/Question";
 import font from "@/styles/font";
 import MikeIcon from "@/components/common/Icons/Mike";
 import Button from "@/components/common/Button/Button";
+import ChatGptIcon from "@/components/common/Icons/ChatGpt";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import ChatGptImage from "@/assets/chat-gpt.png";
+import Image from "next/image";
 
 const InterviewPage = () => {
+  const router = useRouter();
+  const [onMike, setOnMike] = useState(false);
+  const [review, setReview] = useState("");
+
   return (
-    <Layout>
+    <Layout header={false}>
       <StyledInterviewPage>
         <QuestionBox>
           <QuestionIcon />
@@ -24,17 +33,73 @@ const InterviewPage = () => {
           저쩌어쩌구저쩌구라고 저는 생각합니다 그래서 어쩌구
           저쩌어쩌구저쩌구라고 저는 생각합니다 그래서 어쩌구 저쩌
         </LiveAnswerTextBox>
-        <MikeButtobBox>
-          <MikeButton isClicked={false}>
-            <MikeIcon />
-          </MikeButton>
-          <MikeButtonDesc>마이크를 키고 말씀해주셔야합니다</MikeButtonDesc>
-        </MikeButtobBox>
+
+        {review.length === 0 ? (
+          <MikeButtobBox>
+            <MikeButton
+              isClicked={onMike}
+              onClick={() => setOnMike((prev) => !prev)}
+            >
+              <MikeIcon />
+            </MikeButton>
+            <MikeButtonDesc>마이크를 키고 말씀해주셔야합니다</MikeButtonDesc>
+          </MikeButtobBox>
+        ) : (
+          <ReviewBox>
+            <Image
+              src={ChatGptImage}
+              width={30}
+              height={30}
+              alt="chat-gpt-image"
+            />
+            <ReviewText>
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+            </ReviewText>
+          </ReviewBox>
+        )}
         <MoveButtonBox>
-          <Button option="SECONDARY" width={100}>
+          <Button
+            option="SECONDARY"
+            width={100}
+            onClick={() => router.push("/")}
+          >
             끝내기
           </Button>
-          <Button width={100}>다음</Button>
+          <Button width={100} onClick={() => router.push("/interview/review")}>
+            다음
+          </Button>
         </MoveButtonBox>
       </StyledInterviewPage>
     </Layout>
@@ -71,8 +136,8 @@ const Highlight = styled.span`
 `;
 
 const LiveAnswerTextBox = styled.div`
-  ${font.btn1}
-  padding: 32px;
+  ${font.context}
+  padding: 16px;
   width: 100%;
   min-height: 200px;
   border: 1px solid ${color.subColor};
@@ -106,4 +171,20 @@ const MoveButtonBox = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+`;
+
+const ReviewBox = styled.div`
+  display: flex;
+  border-radius: 6px;
+  width: 100%;
+  min-height: 200px;
+  border: 1px solid ${color.secondaryBgColor};
+  padding: 16px;
+  background-color: ${color.subColor};
+`;
+
+const ReviewText = styled.p`
+  ${font.context}
+  padding: 8px;
+  white-space: pre-line;
 `;

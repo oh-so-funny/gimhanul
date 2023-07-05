@@ -32,6 +32,7 @@ const StyledJobMenuItem = styled.li`
   border: 2px solid ${color.subColor};
   cursor: pointer;
   &:hover {
+    border: 2px solid ${color.primaryColor};
     background-color: ${color.primaryColor};
   }
 `;

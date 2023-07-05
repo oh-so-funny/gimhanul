@@ -9,9 +9,14 @@ interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
   option?: "PRIMARY" | "SECONDARY";
 }
 
-const Button = ({ children, width, option = "PRIMARY" }: PropsType) => {
+const Button = ({
+  children,
+  width,
+  option = "PRIMARY",
+  onClick,
+}: PropsType) => {
   return (
-    <StyledButton style={{ width }} option={option}>
+    <StyledButton style={{ width }} option={option} onClick={onClick}>
       {children}
     </StyledButton>
   );
