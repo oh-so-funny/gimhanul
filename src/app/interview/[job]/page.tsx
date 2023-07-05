@@ -15,6 +15,7 @@ import useDebounce from "@/hooks/useDebounce";
 import QUESTION_DATA from "@/fixtures";
 // @ts-ignore
 import { useSpeechRecognition } from "react-speech-kit";
+import { customAxios } from "@/api";
 
 const InterviewPage = () => {
   const router = useRouter();
@@ -24,17 +25,17 @@ const InterviewPage = () => {
   const category = pathName.replace("/interview/", "");
 
   // useState
-  const [userLiveAnswer, setUserLiveAnswer] = useState("");
+  const [reply, setReply] = useState("");
   const [review, setReview] = useState("");
   const [question, setQuestion] = useState("");
 
   // debounce
-  const debouncedUserLiveAnswer = useDebounce(userLiveAnswer, 1000);
+  const debouncedUserReply = useDebounce(reply, 1000);
 
   // speech
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result: string) => {
-      setUserLiveAnswer(result);
+      setReply(result);
     },
   });
 
@@ -42,7 +43,6 @@ const InterviewPage = () => {
   useEffect(() => {
     const getQuestionData = () => {
       const randomNumber = Math.floor(Math.random() * 20);
-
       if (category === "FRONT_END") {
         return QUESTION_DATA.FRONT_END[randomNumber];
       }
@@ -60,6 +60,19 @@ const InterviewPage = () => {
     setQuestion(getQuestionData());
   }, []);
 
+  // api
+  const submitToGpt = async () => {
+    try {
+      const { data } = await customAxios.post("/api/interview", {
+        question,
+        reply,
+      });
+      setReview(data.content);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Layout header={false}>
       <StyledInterviewPage>
@@ -72,7 +85,7 @@ const InterviewPage = () => {
             <p>답변중입니다...</p>
           ) : (
             <p>
-              <Highlight>질문자의 답변:</Highlight> {debouncedUserLiveAnswer}
+              <Highlight>질문자의 답변:</Highlight> {debouncedUserReply}
             </p>
           )}
         </LiveAnswerTextBox>
@@ -107,10 +120,7 @@ const InterviewPage = () => {
             끝내기
           </Button>
           {review.length === 0 ? (
-            <Button
-              width={100}
-              onClick={() => setReview("우와 그렇게 생각했군요")}
-            >
+            <Button width={100} onClick={submitToGpt}>
               제출
             </Button>
           ) : (

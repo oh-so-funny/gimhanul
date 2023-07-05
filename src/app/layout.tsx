@@ -1,4 +1,4 @@
-import QueryClientProvider from "@/services/QueryClientProvider";
+import QueryClientProvider from "@/api/QueryClientProvider";
 import { ReactNode } from "react";
 
 export const metadata = {
