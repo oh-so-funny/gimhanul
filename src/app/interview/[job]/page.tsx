@@ -60,7 +60,7 @@ const InterviewPage = () => {
       return "오류가 일어났어요 !";
     };
     setQuestion(getQuestionData());
-  }, []);
+  }, [question]);
 
   // api
   const submitToGpt = async () => {
@@ -132,7 +132,11 @@ const InterviewPage = () => {
             ) : (
               <Button
                 width={100}
-                onClick={() => setReview("우와 그렇게 생각했군요")}
+                onClick={() => {
+                  router.push(`/interview/${category}`);
+                  setReview("");
+                  setQuestion("");
+                }}
               >
                 다음
               </Button>
