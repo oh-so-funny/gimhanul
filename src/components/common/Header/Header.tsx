@@ -8,8 +8,7 @@ const Header = () => {
   const router = useRouter();
   return (
     <StyledHeader>
-      <Logo onClick={() => router.push("/")}>AI 면접 코칭 서비스</Logo>
-      <LoginButton>로그인</LoginButton>
+      <Logo onClick={() => router.push("/")}>슈잉</Logo>
     </StyledHeader>
   );
 };
@@ -32,9 +31,4 @@ const Logo = styled.span`
   ${font.H4}
   color: ${color.white};
   cursor: pointer;
-`;
-
-const LoginButton = styled.button`
-  ${font.H4}
-  color: ${color.white};
 `;
