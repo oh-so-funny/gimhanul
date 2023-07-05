@@ -26,6 +26,7 @@ const InterviewPage = () => {
   // useState
   const [userLiveAnswer, setUserLiveAnswer] = useState("");
   const [review, setReview] = useState("");
+  const [question, setQuestion] = useState("");
 
   // debounce
   const debouncedUserLiveAnswer = useDebounce(userLiveAnswer, 1000);
@@ -38,34 +39,33 @@ const InterviewPage = () => {
   });
 
   // get data
-  const getQuestionData = () => {
-    let data;
-    const randomNumber = Math.floor(Math.random() * 20);
+  useEffect(() => {
+    const getQuestionData = () => {
+      const randomNumber = Math.floor(Math.random() * 20);
 
-    switch (category) {
-      case "FRONT_END":
-        data = QUESTION_DATA.FRONT_END[randomNumber];
-        break;
-      case "BACK_END":
-        data = QUESTION_DATA.BACK_END[randomNumber];
-        break;
-      case "PRODUCT_DESIGNER":
-        data = QUESTION_DATA.PRODUCT_DESIGNER[randomNumber];
-        break;
-      case "DEVOPS":
-        data = QUESTION_DATA.DEVOPS[randomNumber];
-        break;
-    }
-
-    return data;
-  };
+      if (category === "FRONT_END") {
+        return QUESTION_DATA.FRONT_END[randomNumber];
+      }
+      if (category === "BACK_END") {
+        return QUESTION_DATA.BACK_END[randomNumber];
+      }
+      if (category === "PRODUCT_DESIGNER") {
+        return QUESTION_DATA.PRODUCT_DESIGNER[randomNumber];
+      }
+      if (category === "DEVOPS") {
+        return QUESTION_DATA.DEVOPS[randomNumber];
+      }
+      return "오류가 일어났어요 !";
+    };
+    setQuestion(getQuestionData());
+  }, []);
 
   return (
     <Layout header={false}>
       <StyledInterviewPage>
         <QuestionBox>
           <QuestionIcon />
-          <QuestionText>{getQuestionData()}</QuestionText>
+          <QuestionText>{question}</QuestionText>
         </QuestionBox>
         <LiveAnswerTextBox>
           {listening ? (
