@@ -7,42 +7,81 @@ import QuestionIcon from "@/components/common/Icons/Question";
 import font from "@/styles/font";
 import MikeIcon from "@/components/common/Icons/Mike";
 import Button from "@/components/common/Button/Button";
-import ChatGptIcon from "@/components/common/Icons/ChatGpt";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import ChatGptImage from "@/assets/chat-gpt.png";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import ChatGptImage from "@/assets/chat-gpt.png";
+import useDebounce from "@/hooks/useDebounce";
+import QUESTION_DATA from "@/fixtures";
+// @ts-ignore
+import { useSpeechRecognition } from "react-speech-kit";
 
 const InterviewPage = () => {
   const router = useRouter();
-  const [onMike, setOnMike] = useState(false);
+
+  // path
+  const pathName = usePathname();
+  const category = pathName.replace("/interview/", "");
+
+  // useState
+  const [userLiveAnswer, setUserLiveAnswer] = useState("");
   const [review, setReview] = useState("");
+  const [question, setQuestion] = useState("");
+
+  // debounce
+  const debouncedUserLiveAnswer = useDebounce(userLiveAnswer, 1000);
+
+  // speech
+  const { listen, listening, stop } = useSpeechRecognition({
+    onResult: (result: string) => {
+      setUserLiveAnswer(result);
+    },
+  });
+
+  // get data
+  useEffect(() => {
+    const getQuestionData = () => {
+      const randomNumber = Math.floor(Math.random() * 20);
+
+      if (category === "FRONT_END") {
+        return QUESTION_DATA.FRONT_END[randomNumber];
+      }
+      if (category === "BACK_END") {
+        return QUESTION_DATA.BACK_END[randomNumber];
+      }
+      if (category === "PRODUCT_DESIGNER") {
+        return QUESTION_DATA.PRODUCT_DESIGNER[randomNumber];
+      }
+      if (category === "DEVOPS") {
+        return QUESTION_DATA.DEVOPS[randomNumber];
+      }
+      return "오류가 일어났어요 !";
+    };
+    setQuestion(getQuestionData());
+  }, []);
 
   return (
     <Layout header={false}>
       <StyledInterviewPage>
         <QuestionBox>
           <QuestionIcon />
-          <QuestionText>
-            동등연산자과 일치연산자의 차이에 대해서 설명하시오.
-          </QuestionText>
+          <QuestionText>{question}</QuestionText>
         </QuestionBox>
         <LiveAnswerTextBox>
-          <Highlight>질문자의 답변:</Highlight> 어쩌구저쩌구라고 저는 생각합니다
-          그래서 어쩌구 저쩌구 어쩌구저쩌구라고 저는 생각합니다 그래서 어쩌구
-          저쩌어쩌구저쩌구라고 저는 생각합니다 그래서 어쩌구
-          저쩌어쩌구저쩌구라고 저는 생각합니다 그래서 어쩌구 저쩌
+          {listening ? (
+            <p>답변중입니다...</p>
+          ) : (
+            <p>
+              <Highlight>질문자의 답변:</Highlight> {debouncedUserLiveAnswer}
+            </p>
+          )}
         </LiveAnswerTextBox>
-
         {review.length === 0 ? (
           <MikeButtobBox>
-            <MikeButton
-              isClicked={onMike}
-              onClick={() => setOnMike((prev) => !prev)}
-            >
+            <MikeButton onMouseDown={listen} onMouseUp={stop}>
               <MikeIcon />
             </MikeButton>
-            <MikeButtonDesc>마이크를 키고 말씀해주셔야합니다</MikeButtonDesc>
+            <MikeButtonDesc>마이크를 꾹 누르고 말씀해주세요!</MikeButtonDesc>
           </MikeButtobBox>
         ) : (
           <ReviewBox>
@@ -53,39 +92,9 @@ const InterviewPage = () => {
               alt="chat-gpt-image"
             />
             <ReviewText>
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
-              암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ암ㄴ엄ㄴㅇ머노럼농혼머ㅗ엄나ㅓ인ㅁ
+              {review.length === 0
+                ? "GPT가 열심히 답변중입니다 조금만 기다려주세요..."
+                : review}
             </ReviewText>
           </ReviewBox>
         )}
@@ -97,9 +106,21 @@ const InterviewPage = () => {
           >
             끝내기
           </Button>
-          <Button width={100} onClick={() => router.push("/interview/review")}>
-            다음
-          </Button>
+          {review.length === 0 ? (
+            <Button
+              width={100}
+              onClick={() => setReview("우와 그렇게 생각했군요")}
+            >
+              제출
+            </Button>
+          ) : (
+            <Button
+              width={100}
+              onClick={() => setReview("우와 그렇게 생각했군요")}
+            >
+              다음
+            </Button>
+          )}
         </MoveButtonBox>
       </StyledInterviewPage>
     </Layout>
@@ -151,12 +172,11 @@ const MikeButtobBox = styled.div`
   gap: 16px;
 `;
 
-const MikeButton = styled.button<{ isClicked: boolean }>`
+const MikeButton = styled.button`
   border-radius: 50%;
   width: 70px;
   height: 70px;
   border: 2px solid ${color.primaryColor};
-  background-color: ${(props) => props.isClicked && color.primaryColor};
   &:hover {
     background-color: ${color.primaryColor};
   }
@@ -175,7 +195,7 @@ const MoveButtonBox = styled.div`
 
 const ReviewBox = styled.div`
   display: flex;
-  border-radius: 6px;
+  border-radius: 8px;
   width: 100%;
   min-height: 200px;
   border: 1px solid ${color.secondaryBgColor};
@@ -185,6 +205,6 @@ const ReviewBox = styled.div`
 
 const ReviewText = styled.p`
   ${font.context}
-  padding: 8px;
+  padding: 5px;
   white-space: pre-line;
 `;
