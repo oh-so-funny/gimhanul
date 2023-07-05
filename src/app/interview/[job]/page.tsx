@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ChatGptImage from "@/assets/chat-gpt.png";
+import useDebounce from "@/hooks/useDebounce";
 // @ts-ignore
 import { useSpeechRecognition } from "react-speech-kit";
 
@@ -18,6 +19,8 @@ const InterviewPage = () => {
   const router = useRouter();
   const [userLiveAnswer, setUserLiveAnswer] = useState("");
   const [review, setReview] = useState("");
+
+  const debouncedUserLiveAnswer = useDebounce(userLiveAnswer, 1000);
 
   // speech
   const { listen, listening, stop } = useSpeechRecognition({
@@ -40,7 +43,7 @@ const InterviewPage = () => {
             <p>답변중입니다...</p>
           ) : (
             <p>
-              <Highlight>질문자의 답변:</Highlight> {userLiveAnswer}
+              <Highlight>질문자의 답변:</Highlight> {debouncedUserLiveAnswer}
             </p>
           )}
         </LiveAnswerTextBox>
