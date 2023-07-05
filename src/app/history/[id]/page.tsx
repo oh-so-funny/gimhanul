@@ -16,7 +16,7 @@ const HistoryDetailPage = () => {
 
   // path
   const pathName = usePathname();
-  const category = pathName.replace("/interview/", "");
+  const id = pathName.replace("/interview/", "");
 
   // useState
   const [question, setQuestion] = useState("");
