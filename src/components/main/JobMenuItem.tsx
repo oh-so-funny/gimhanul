@@ -2,10 +2,14 @@ import ShortcutsIcon from "../common/Icons/Shortcuts";
 import color from "@/styles/color";
 import font from "@/styles/font";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 const JobMenuItem = ({ job }: { job: string }) => {
+  const router = useRouter();
   return (
-    <StyledJobMenuItem>
+    <StyledJobMenuItem
+      onClick={() => router.push(`/interview/${job.replace(" ", "")}`)}
+    >
       <JobText>{job}</JobText>
       <InterviewLink>
         면접 바로가기 <ShortcutsIcon />
@@ -28,6 +32,7 @@ const StyledJobMenuItem = styled.li`
   border: 2px solid ${color.subColor};
   cursor: pointer;
   &:hover {
+    border: 2px solid ${color.primaryColor};
     background-color: ${color.primaryColor};
   }
 `;

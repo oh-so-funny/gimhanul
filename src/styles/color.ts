@@ -5,6 +5,7 @@ const color = {
   secondaryBgColor: "#212225",
   primaryBgColor: "#1b1c1e",
   // default
+  red: "#F44336",
   black: "#000000",
   white: "#FFFFFF",
   // gray

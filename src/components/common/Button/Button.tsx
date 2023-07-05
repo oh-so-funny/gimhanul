@@ -6,19 +6,30 @@ import styled from "styled-components";
 interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   width?: number;
+  option?: "PRIMARY" | "SECONDARY";
 }
 
-const Button = ({ children, width }: PropsType) => {
-  return <StyledButton style={{ width }}>{children}</StyledButton>;
+const Button = ({
+  children,
+  width,
+  option = "PRIMARY",
+  onClick,
+}: PropsType) => {
+  return (
+    <StyledButton style={{ width }} option={option} onClick={onClick}>
+      {children}
+    </StyledButton>
+  );
 };
 
 export default Button;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ option: "PRIMARY" | "SECONDARY" }>`
   ${font.btn1}
   border-radius: 8px;
   padding: 0px 16px;
   cursor: pointer;
   height: 48px;
-  background-color: ${color.primaryColor};
+  background-color: ${(props) =>
+    props.option === "PRIMARY" ? color.primaryColor : color.subColor};
 `;
