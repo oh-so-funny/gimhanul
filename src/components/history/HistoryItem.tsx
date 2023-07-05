@@ -1,10 +1,17 @@
 import color from "@/styles/color";
 import font from "@/styles/font";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 const HistoryItem = () => {
+  const router = useRouter();
+
   return (
-    <StyledHistoryItem>
+    <StyledHistoryItem
+      onClick={() =>
+        router.push("/history/브라우저렌더링원리에대해서설명해보시오.")
+      }
+    >
       <Question>브라우저 렌더링 원리에 대해서 설명해보세요.</Question>
       <Category>프론트엔드</Category>
     </StyledHistoryItem>
