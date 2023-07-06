@@ -22,11 +22,7 @@ const HistoryItem = ({ question, category }: PropTypes) => {
   console.log(category);
 
   return (
-    <StyledHistoryItem
-      onClick={() =>
-        router.push("/history/브라우저렌더링원리에대해서설명해보시오.")
-      }
-    >
+    <StyledHistoryItem onClick={() => router.push(`/history/${question}`)}>
       <Question>{question}</Question>
       <Category>{koreanCategory[category]}</Category>
     </StyledHistoryItem>

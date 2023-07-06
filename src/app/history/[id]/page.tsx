@@ -6,21 +6,32 @@ import styled from "styled-components";
 import QuestionIcon from "@/components/common/Icons/Question";
 import font from "@/styles/font";
 import Button from "@/components/common/Button/Button";
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import ChatGptImage from "@/assets/chat-gpt.png";
+import { customAxios } from "@/api";
 
 const HistoryDetailPage = () => {
   const router = useRouter();
-
-  // path
-  const pathName = usePathname();
-  const id = pathName.replace("/interview/", "");
+  const params = useParams();
 
   // useState
   const [question, setQuestion] = useState("");
   const [review, setReview] = useState("");
+
+  const getInterviews = async () => {
+    const response = await customAxios.get(
+      `/api/interview/${decodeURI(params.id)}`
+    );
+    const feedback = response.data.at(-1).feedback;
+    setQuestion(decodeURI(params.id));
+    setReview(feedback.content);
+  };
+
+  useEffect(() => {
+    getInterviews();
+  }, []);
 
   return (
     <Layout header={false}>

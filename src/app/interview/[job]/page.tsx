@@ -46,7 +46,7 @@ const InterviewPage = () => {
   useEffect(() => {
     const getQuestionData = () => {
       const randomNumber = Math.floor(Math.random() * 20);
-      if (category === "B") {
+      if (category === "FRONT_END") {
         return QUESTION_DATA.FRONT_END[randomNumber];
       }
       if (category === "BACK_END") {
@@ -60,7 +60,8 @@ const InterviewPage = () => {
       }
       return "오류가 일어났어요 !";
     };
-    setQuestion(getQuestionData());
+    const question = getQuestionData();
+    setQuestion(question);
   }, [question]);
 
   // api
