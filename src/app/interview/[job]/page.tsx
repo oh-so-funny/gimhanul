@@ -46,7 +46,7 @@ const InterviewPage = () => {
   useEffect(() => {
     const getQuestionData = () => {
       const randomNumber = Math.floor(Math.random() * 20);
-      if (category === "FRONT_END") {
+      if (category === "B") {
         return QUESTION_DATA.FRONT_END[randomNumber];
       }
       if (category === "BACK_END") {
@@ -68,6 +68,7 @@ const InterviewPage = () => {
     setIsLoading(true);
     try {
       const { data } = await customAxios.post("/api/interview", {
+        category,
         question,
         reply,
       });

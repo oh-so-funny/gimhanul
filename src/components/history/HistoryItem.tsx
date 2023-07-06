@@ -3,8 +3,23 @@ import font from "@/styles/font";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
-const HistoryItem = () => {
+type Category = "FRONT_END" | "BACK_END" | "PRODUCT_DESIGNER" | "DEVOPS";
+
+interface PropTypes {
+  question: string;
+  category: Category;
+}
+
+const koreanCategory = {
+  FRONT_END: "프론트엔드",
+  BACK_END: "백엔드",
+  PRODUCT_DESIGNER: "프로덕트 디자이너",
+  DEVOPS: "데브옵스",
+};
+
+const HistoryItem = ({ question, category }: PropTypes) => {
   const router = useRouter();
+  console.log(category);
 
   return (
     <StyledHistoryItem
@@ -12,8 +27,8 @@ const HistoryItem = () => {
         router.push("/history/브라우저렌더링원리에대해서설명해보시오.")
       }
     >
-      <Question>브라우저 렌더링 원리에 대해서 설명해보세요.</Question>
-      <Category>프론트엔드</Category>
+      <Question>{question}</Question>
+      <Category>{koreanCategory[category]}</Category>
     </StyledHistoryItem>
   );
 };
